@@ -38,9 +38,13 @@
             this.BtnIniciarSesion = new Guna.UI2.WinForms.Guna2Button();
             this.BtnCerrar = new Guna.UI2.WinForms.Guna2Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnAdmin = new Guna.UI2.WinForms.Guna2Button();
+            this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.guna2Panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.guna2Panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -73,6 +77,7 @@
             // 
             // guna2Panel1
             // 
+            this.guna2Panel1.Controls.Add(this.guna2Panel2);
             this.guna2Panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.guna2Panel1.Location = new System.Drawing.Point(513, 0);
             this.guna2Panel1.Name = "guna2Panel1";
@@ -182,8 +187,9 @@
             this.BtnIniciarSesion.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.BtnIniciarSesion.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.BtnIniciarSesion.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BtnIniciarSesion.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnIniciarSesion.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.BtnIniciarSesion.ForeColor = System.Drawing.Color.White;
+            this.BtnIniciarSesion.IndicateFocus = true;
             this.BtnIniciarSesion.Location = new System.Drawing.Point(19, 330);
             this.BtnIniciarSesion.Name = "BtnIniciarSesion";
             this.BtnIniciarSesion.Padding = new System.Windows.Forms.Padding(2);
@@ -201,8 +207,9 @@
             this.BtnCerrar.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.BtnCerrar.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.BtnCerrar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.BtnCerrar.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnCerrar.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.BtnCerrar.ForeColor = System.Drawing.Color.White;
+            this.BtnCerrar.IndicateFocus = true;
             this.BtnCerrar.Location = new System.Drawing.Point(19, 410);
             this.BtnCerrar.Name = "BtnCerrar";
             this.BtnCerrar.Padding = new System.Windows.Forms.Padding(2);
@@ -223,6 +230,35 @@
             this.label1.Text = "Usuario";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // btnAdmin
+            // 
+            this.btnAdmin.Animated = true;
+            this.btnAdmin.BorderRadius = 12;
+            this.btnAdmin.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnAdmin.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnAdmin.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnAdmin.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnAdmin.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnAdmin.FillColor = System.Drawing.Color.Black;
+            this.btnAdmin.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.btnAdmin.ForeColor = System.Drawing.Color.White;
+            this.btnAdmin.IndicateFocus = true;
+            this.btnAdmin.Location = new System.Drawing.Point(448, 0);
+            this.btnAdmin.Name = "btnAdmin";
+            this.btnAdmin.Padding = new System.Windows.Forms.Padding(2);
+            this.btnAdmin.Size = new System.Drawing.Size(45, 29);
+            this.btnAdmin.TabIndex = 10;
+            this.btnAdmin.Click += new System.EventHandler(this.btnAdmin_Click);
+            // 
+            // guna2Panel2
+            // 
+            this.guna2Panel2.Controls.Add(this.btnAdmin);
+            this.guna2Panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.guna2Panel2.Location = new System.Drawing.Point(0, 462);
+            this.guna2Panel2.Name = "guna2Panel2";
+            this.guna2Panel2.Size = new System.Drawing.Size(493, 29);
+            this.guna2Panel2.TabIndex = 11;
+            // 
             // loginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -235,7 +271,9 @@
             this.Load += new System.EventHandler(this.loginForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.guna2Panel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.guna2Panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -252,5 +290,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private Guna.UI2.WinForms.Guna2TextBox TxtPassword;
         private Guna.UI2.WinForms.Guna2Panel guna2Panel1;
+        private Guna.UI2.WinForms.Guna2Button btnAdmin;
+        private Guna.UI2.WinForms.Guna2Panel guna2Panel2;
     }
 }

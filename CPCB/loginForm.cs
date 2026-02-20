@@ -132,9 +132,6 @@ namespace CPCB
 
                         if (result != null)
                         {
-                            // LOGIN EXITOSO
-                            MessageBox.Show("¡Bienvenido " + usuario + "!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                             FormPanelPrincipal principal = new FormPanelPrincipal();
                             principal.Show();
                             this.Hide(); 
@@ -158,6 +155,94 @@ namespace CPCB
         private void BtnCerrar_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void btnAdmin_Click(object sender, EventArgs e)
+        {
+            // Panel flotante para pedir credenciales (Pop-up rápido)
+            using (Form prompt = new Form())
+            {
+                prompt.Width = 350;
+                prompt.Height = 220;
+                prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
+                prompt.Text = "Acceso Super Usuario (Gestión)";
+                prompt.StartPosition = FormStartPosition.CenterScreen;
+                prompt.MaximizeBox = false;
+                prompt.MinimizeBox = false;
+                prompt.BackColor = Color.White;
+
+                Label textLabel = new Label() { Left = 30, Top = 20, Text = "Usuario Administrador:", AutoSize = true };
+                TextBox txtUserPrompt = new TextBox() { Left = 30, Top = 45, Width = 270 };
+
+                Label passLabel = new Label() { Left = 30, Top = 80, Text = "Contraseña:", AutoSize = true };
+                TextBox txtPassPrompt = new TextBox() { Left = 30, Top = 105, Width = 270, PasswordChar = '•' };
+
+                Button confirmation = new Button()
+                {
+                    Text = "Entrar",
+                    Left = 180,
+                    Width = 120,
+                    Top = 140,
+                    DialogResult = DialogResult.OK,
+                    BackColor = Color.FromArgb(0, 120, 215),
+                    ForeColor = Color.White,
+                    FlatStyle = FlatStyle.Flat
+                };
+
+                prompt.Controls.Add(textLabel);
+                prompt.Controls.Add(txtUserPrompt);
+                prompt.Controls.Add(passLabel);
+                prompt.Controls.Add(txtPassPrompt);
+                prompt.Controls.Add(confirmation);
+                prompt.AcceptButton = confirmation;
+
+                // Mostrar el diálogo
+                if (prompt.ShowDialog() == DialogResult.OK)
+                {
+                    string u = txtUserPrompt.Text.Trim();
+                    string p = txtPassPrompt.Text.Trim();
+
+                    try
+                    {
+                        // USAMOS TU CLASE AUXILIAR DE CONEXIÓN
+                        using (var con = Conexion.LeerConexion())
+                        {
+                            con.Open();
+
+                            // Ajustamos la consulta: 'name' es tu columna de usuario. 
+                            // Nota: Asegúrate que tu tabla 'users' tenga una columna llamada 'role'
+                            string query = "SELECT role FROM users WHERE users = @u AND password = @p";
+
+                            using (MySqlCommand cmd = new MySqlCommand(query, con))
+                            {
+                                cmd.Parameters.AddWithValue("@u", u);
+                                cmd.Parameters.AddWithValue("@p", p);
+
+                                object resultado = cmd.ExecuteScalar();
+
+                                // Verificamos si existe y si su rol es "SA"
+                                if (resultado != null && resultado.ToString() == "SA")
+                                {
+                                    MessageBox.Show("Acceso concedido como Administrador", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                    // Asegúrate de tener creado este formulario en tu proyecto
+                                    FormAdminUsuarios adminForm = new FormAdminUsuarios();
+                                    adminForm.ShowDialog();
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Credenciales incorrectas o el usuario no tiene permisos de Super Admin (SA).",
+                                                    "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error al verificar credenciales: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
     }
 
