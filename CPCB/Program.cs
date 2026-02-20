@@ -16,7 +16,7 @@ namespace CPCB
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormPanelPrincipal());
+            Application.Run(new loginForm());
         }
     }
 }

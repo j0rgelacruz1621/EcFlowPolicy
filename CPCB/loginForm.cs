@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -87,6 +88,77 @@ namespace CPCB
         // Lista para guardar varias bolitas
         List<Burbuja> listaBurbujas = new List<Burbuja>();
         Random rnd = new Random();
+
+        private void TxtUser_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TxtPassword_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnIniciarSesion_Click(object sender, EventArgs e)
+        {
+            string usuario = TxtUser.Text.Trim();
+            string password = TxtPassword.Text.Trim();
+
+            // 1. Validar que los campos no estén vacíos
+            if (string.IsNullOrEmpty(usuario) || string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Por favor, llene todos los campos", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                // 2. Usar la clase de conexión
+                using (var conexion = Conexion.LeerConexion())
+                {
+                    conexion.Open();
+
+                    // 3. Consulta SQL (la tabla es 'users', columnas 'name' y 'password')
+                    string query = "SELECT id FROM users WHERE name = @user AND password = @pass";
+
+                    using (var comando = new MySqlCommand(query, conexion))
+                    {
+                        // Agregamos los parámetros para seguridad
+                        comando.Parameters.AddWithValue("@user", usuario);
+                        comando.Parameters.AddWithValue("@pass", password);
+
+                        // Ejecutamos y obtenemos el resultado
+                        object result = comando.ExecuteScalar();
+
+                        if (result != null)
+                        {
+                            // LOGIN EXITOSO
+                            MessageBox.Show("¡Bienvenido " + usuario + "!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            FormPanelPrincipal principal = new FormPanelPrincipal();
+                            principal.Show();
+                            this.Hide(); 
+                        }
+                        else
+                        {
+                            // DATOS INCORRECTOS
+                            MessageBox.Show("Usuario o contraseña incorrectos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            TxtPassword.Clear();
+                            TxtUser.Focus();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error de conexión: " + ex.Message);
+            }
+        }
+
+        private void BtnCerrar_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 
 
